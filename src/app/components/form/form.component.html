@@ -1,0 +1,96 @@
+<div *ngIf="isLoading; then thenBlock; else elseBlock"></div>
+<ng-template #thenBlock>
+    <mat-spinner></mat-spinner>
+</ng-template>
+
+<ng-template #elseBlock>
+    <div class="container d-flex justify-content-center pt-2">
+        <div class="col-8">
+            <h5 *ngIf="isAdd" class="text-center p-3 text-uppercase">Creation d'ordinateur</h5>
+            <h5 *ngIf="isEdit" class="text-center p-3 text-uppercase">Modification d'ordinateur</h5>
+            <div *ngIf="formComputer">
+                <form #computerForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+                    <div class="form-group">
+                        <!-- type text pour modele -->
+                        <label class="font-weight-bold"> Modèle </label>
+                        <input type="text" name="modele" #modele="ngModel" id="modele" [(ngModel)]="formComputer.modele"
+                            class="form-control" required [class.is-invalid]="modele.invalid && modele.touched">
+                        <small *ngIf="modele.invalid && modele.touched" class="text-danger"> Modele is required </small>
+                    </div>
+
+                    <div class="form-group">
+                        <!-- type radio pour marque -->
+                        <label class="font-weight-bold"> Marque </label> <br>
+                        <div class="form-check form-check-inline" *ngFor="let marqueDispo of marquesDispo">
+                            <input class="form-check-input my-radio-marque" type="radio" name="marqueName"
+                                [value]="marqueDispo" #marque="ngModel" required [(ngModel)]="formComputer.marque">
+                            <label class="form-check-label"> {{marqueDispo}} </label>
+                        </div>
+                        <small
+                            *ngIf="computerForm.controls.marqueName?.invalid && computerForm.controls.marqueName?.touched"
+                            class="text-danger">
+                            Marque is required
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <!-- type select pour type -->
+                        <label class="font-weight-bold"> Type </label>
+                        <select class="form-control" name="type" required [(ngModel)]="formComputer.type"
+                            #type="ngModel" id="type" [class.is-invalid]="type.invalid && type.touched">
+                            <option selected value="" disabled> Choose a type: </option>
+                            <option *ngFor="let typeDispo of typesDispo" [value]="typeDispo"> {{ typeDispo }} </option>
+                        </select>
+                        <small class="text-danger" *ngIf="type.invalid && type.touched">Type is required</small>
+                    </div>
+
+                    <div class="form-group">
+                        <!-- type radio pour category -->
+                        <label class="font-weight-bold"> Category </label> <br>
+                        <div class="form-check form-check-inline" *ngFor="let categoryDispo of categoriesDispo">
+                            <input class="form-check-input my-radio-category" type="radio" name="categoryName"
+                                [value]="categoryDispo" #category="ngModel" required
+                                [(ngModel)]="formComputer.category">
+                            <label class="form-check-label"> {{categoryDispo}} </label>
+                        </div>
+                        <small
+                            *ngIf="computerForm.controls.categoryName?.invalid && computerForm.controls.categoryName?.touched"
+                            class="text-danger">
+                            Category is required
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <!-- type number pour prixAchat -->
+                        <label class="font-weight-bold"> Prix d'achat </label>
+                        <input type="number" name="achat" #achat="ngModel" id="achat"
+                            [(ngModel)]="formComputer.prixAchat" class="form-control" required
+                            [class.is-invalid]="achat.invalid && achat.touched" step="0.01" [min]="minValue"
+                            (change)="checkRangeAndNumber(formComputer.prixAchat, $event)">
+                        <small *ngIf="(achat.invalid || horsplage || isNaN) && achat.touched" class="text-danger"> Prix
+                            d'achat is required as number and more than {{minValue}} </small>
+                    </div>
+
+                    <div class="form-group">
+                        <!-- type number pour prixVente -->
+                        <label class="font-weight-bold"> Prix de vente </label>
+                        <input type="number" name="vente" #vente="ngModel" id="vente"
+                            [(ngModel)]="formComputer.prixVente" class="form-control" required
+                            [class.is-invalid]="vente.invalid && vente.touched" step="0.01" [min]="minValue"
+                            (change)="checkRangeAndNumber(formComputer.prixAchat, $event)">
+                        <small *ngIf="(vente.invalid || horsplage || isNaN) && vente.touched" class="text-danger"> Prix
+                            de vente is required as number and more than {{minValue}} </small>
+                    </div>
+
+                    <input type="submit" value="Confirmer" class="btn btn-primary form-control"
+                        [disabled]="computerForm.invalid || horsplage || isNaN" id="submitBtn">
+                </form>
+            </div>
+            <div *ngIf="!formComputer">
+                <div class="d-flex justify-content-center m-5">
+                    <h1>{{ errorMessage }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

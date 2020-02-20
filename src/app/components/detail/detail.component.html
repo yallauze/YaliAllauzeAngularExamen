@@ -1,0 +1,33 @@
+<div *ngIf="isLoading; then thenBlock; else elseBlock"></div>
+<ng-template #thenBlock>
+    <mat-spinner></mat-spinner>
+</ng-template>
+
+<ng-template #elseBlock>
+    <div *ngIf="computerAfficher">
+        <div class="container">
+            <div class="row justify-content-center p-5">
+                <div class="col-10 p-5">
+                    <h1 class="bg-secondary text-center p-3">Full detail de l'ordinateur avec ID:
+                        {{computerAfficher.id}}</h1>
+                    <h2> <strong> Modèle </strong>: {{ computerAfficher.modele }} </h2>
+                    <p> <strong> Marque </strong>: {{ computerAfficher.marque }} </p>
+                    <p> <strong> Type </strong>: {{ computerAfficher.type }} </p>
+                    <p> <strong> Category </strong>: {{ computerAfficher.category }} </p>
+                    <p> <strong> Prix d'achat </strong>: {{ computerAfficher.prixAchat | number : '1.2-2'}} </p>
+                    <p> <strong> Prix de vente </strong>: {{ computerAfficher.prixVente | number : '1.2-2'}} </p>
+                    <p> <strong> Rentabilité </strong>:
+                        {{ computerAfficher.prixVente - computerAfficher.prixAchat | number : '1.2-2'}} </p>
+                    <p> <strong> Date d'entrée </strong>: {{ computerAfficher.dateEntreeStock }} </p>
+                    <button class="btn btn-primary" routerLink="/computers"> Go Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!computerAfficher">
+        <div class="d-flex justify-content-center m-5">
+            <h1>{{ errorMessage }}</h1>
+        </div>
+    </div>
+</ng-template>
