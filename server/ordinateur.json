@@ -49,6 +49,16 @@
       "prixAchat": 199.99,
       "prixVente": 475.99,
       "dateEntreeStock": "2020-02-20T13:24:05.617Z"
+    },
+    {
+      "id": 11,
+      "modele": "testModele",
+      "marque": "Dell",
+      "type": "Portable",
+      "category": "Gaming",
+      "prixAchat": 199.99,
+      "prixVente": 475.99,
+      "dateEntreeStock": "2020-02-20T14:40:41.678Z"
     }
   ]
 }

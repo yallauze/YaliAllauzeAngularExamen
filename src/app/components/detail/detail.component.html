@@ -4,7 +4,7 @@
 </ng-template>
 
 <ng-template #elseBlock>
-    <div *ngIf="computerAfficher">
+    <div *ngIf="!errorMessage">
         <div class="container">
             <div class="row justify-content-center p-5">
                 <div class="col-10 p-5">
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <div *ngIf="!computerAfficher">
+    <div *ngIf="errorMessage">
         <div class="d-flex justify-content-center m-5">
             <h1>{{ errorMessage }}</h1>
         </div>

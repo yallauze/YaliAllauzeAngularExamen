@@ -10,52 +10,60 @@
                 <span class="badge badge-pill badge-dark">Restant: {{nbRestant}}</span>
             </h1>
         </div>
-        <table class="table text-center">
-            <thead class="bg-secondary text-light">
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Modele</th>
-                    <th scope="col">Marque</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Prix d'achat</th>
-                    <th scope="col">Prix de vente</th>
-                    <th scope="col">Rentabilité</th>
-                    <th scope="col">Date d'entrée</th>
-                    <th scope="col">Edition</th>
-                    <th scope="col">Suppression</th>
-                    <th scope="col"> Voir detail </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let computer of computers" class="myTr">
-                    <th scope="row" class="align-middle"> {{computer.id}} </th>
-                    <td class="align-middle"> {{computer.modele}} </td>
-                    <td class="align-middle"> {{computer.marque}} </td>
-                    <td class="align-middle"> {{computer.type}} </td>
-                    <td class="align-middle"> {{computer.category}} </td>
-                    <td class="align-middle"> {{computer.prixAchat | number : '1.2-2'}} </td>
-                    <td class="align-middle"> {{computer.prixVente | number : '1.2-2'}} </td>
-                    <td class="align-middle"> {{computer.prixVente - computer.prixAchat | number : '1.2-2'}} </td>
-                    <td class="align-middle"> {{computer.dateEntreeStock | date: 'dd/MM/yyyy'}} </td>
-                    <td class="align-middle">
-                        <button [routerLink]="['/edit', computer.id]" class="btn btn-outline-success align-middle">
-                            <mat-icon class="align-middle"> edit </mat-icon>
-                        </button>
-                    </td>
-                    <td class="align-middle">
-                        <button (click)="deleteComputer(computer)"
-                            class="btn btn-outline-danger align-middle deleteComputer">
-                            <mat-icon class="align-middle"> delete </mat-icon>
-                        </button>
-                    </td>
-                    <td class="align-middle">
-                        <button class="btn btn-outline-primary align-middle" [routerLink]="['/computer', computer.id]">
-                            <mat-icon class="align-middle"> more </mat-icon>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div *ngIf="!errorMessage">
+            <table class="table text-center">
+                <thead class="bg-secondary text-light">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Modele</th>
+                        <th scope="col">Marque</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Prix d'achat</th>
+                        <th scope="col">Prix de vente</th>
+                        <th scope="col">Rentabilité</th>
+                        <th scope="col">Date d'entrée</th>
+                        <th scope="col">Edition</th>
+                        <th scope="col">Suppression</th>
+                        <th scope="col"> Voir detail </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let computer of computers" class="myTr">
+                        <th scope="row" class="align-middle"> {{computer.id}} </th>
+                        <td class="align-middle"> {{computer.modele}} </td>
+                        <td class="align-middle"> {{computer.marque}} </td>
+                        <td class="align-middle"> {{computer.type}} </td>
+                        <td class="align-middle"> {{computer.category}} </td>
+                        <td class="align-middle"> {{computer.prixAchat | number : '1.2-2'}} </td>
+                        <td class="align-middle"> {{computer.prixVente | number : '1.2-2'}} </td>
+                        <td class="align-middle"> {{computer.prixVente - computer.prixAchat | number : '1.2-2'}} </td>
+                        <td class="align-middle"> {{computer.dateEntreeStock | date: 'dd/MM/yyyy'}} </td>
+                        <td class="align-middle">
+                            <button [routerLink]="['/edit', computer.id]" class="btn btn-outline-success align-middle">
+                                <mat-icon class="align-middle"> edit </mat-icon>
+                            </button>
+                        </td>
+                        <td class="align-middle">
+                            <button (click)="deleteComputer(computer)"
+                                class="btn btn-outline-danger align-middle deleteComputer">
+                                <mat-icon class="align-middle"> delete </mat-icon>
+                            </button>
+                        </td>
+                        <td class="align-middle">
+                            <button class="btn btn-outline-primary align-middle"
+                                [routerLink]="['/computer', computer.id]">
+                                <mat-icon class="align-middle"> more </mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="errorMessage">
+            <div class="d-flex justify-content-center m-5">
+                <h1>{{ errorMessage }}</h1>
+            </div>
+        </div>
     </div>
 </ng-template>

@@ -8,7 +8,7 @@
         <div class="col-8">
             <h5 *ngIf="isAdd" class="text-center p-3 text-uppercase">Creation d'ordinateur</h5>
             <h5 *ngIf="isEdit" class="text-center p-3 text-uppercase">Modification d'ordinateur</h5>
-            <div *ngIf="formComputer">
+            <div *ngIf="!errorMessage">
                 <form #computerForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
                     <div class="form-group">
                         <!-- type text pour modele -->
@@ -86,7 +86,7 @@
                         [disabled]="computerForm.invalid || horsplage || isNaN" id="submitBtn">
                 </form>
             </div>
-            <div *ngIf="!formComputer">
+            <div *ngIf="errorMessage">
                 <div class="d-flex justify-content-center m-5">
                     <h1>{{ errorMessage }}</h1>
                 </div>

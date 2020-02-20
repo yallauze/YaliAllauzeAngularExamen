@@ -57,15 +57,26 @@ export class FormComponent implements OnInit {
 
   onSubmit() {
     if (this.isAdd) {
-      this._computerService.addComputer(this.formComputer).subscribe(data => {
-        this._toastrService.success(' Creation Submitted!!');
-      });
+      this._computerService.addComputer(this.formComputer).subscribe(
+        (data) => {
+          this._toastrService.success(' Creation Submitted!!');
+          this._router.navigate(['/computers']);
+        },
+        (error) => {
+          this.errorMessage = error;
+        }
+      );
     } else {
-      this._computerService.updateComputer(this.formComputer).subscribe(data => {
-        this._toastrService.success('Modification Submitted!!');
-      });
+      this._computerService.updateComputer(this.formComputer).subscribe(
+        (data) => {
+          this._toastrService.success('Modification Submitted!!');
+          this._router.navigate(['/computers']);
+        },
+        (error) => {
+          this.errorMessage = error;
+        });
     }
-    this._router.navigate(['/computers']);
+
   }
 
   checkRangeAndNumber(_p: number, _$event: any) {

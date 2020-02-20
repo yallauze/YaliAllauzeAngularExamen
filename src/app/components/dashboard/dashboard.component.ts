@@ -12,25 +12,42 @@ export class DashboardComponent implements OnInit {
   public computers: Computer[];
   public isLoading: boolean;
   public nbRestant: number;
+  public errorMessage: string;
 
   constructor(private _computerService: ComputerService, private _toastrService: ToastrService) { }
 
   ngOnInit() {
     this.isLoading = true;
-    this._computerService.getComputers().subscribe((data) => {
-      this.computers = data;
-      this.isLoading = false;
-      this.nbRestant = this.computers.length;
-    });
+    this._computerService.getComputers().subscribe(
+      (data) => {
+        this.computers = data;
+        this.isLoading = false;
+        this.nbRestant = this.computers.length;
+      },
+      (error) => {
+        this.isLoading = false;
+        this.errorMessage = error;
+      }
+    );
   }
 
   deleteComputer(_computer: Computer) {
-    this._computerService.deleteComputer(_computer).subscribe(data => {
-      this._computerService.getComputers().subscribe((data) => {
-        this.computers = data;
-        this.nbRestant = this.computers.length;
-        this._toastrService.success('Deleted!!');
-      });
-    });
+    this._computerService.deleteComputer(_computer).subscribe(
+      (data) => {
+        this._computerService.getComputers().subscribe(
+          (data) => {
+            this.computers = data;
+            this.nbRestant = this.computers.length;
+            this._toastrService.success('Deleted!!');
+          },
+          (error) => {
+            this.errorMessage = error;
+          }
+        );
+      },
+      (error) => {
+        this.errorMessage = error;
+      }
+    );
   }
 }
